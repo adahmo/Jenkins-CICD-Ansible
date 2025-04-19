@@ -31,7 +31,7 @@ pipeline {
                     if (params['Playbook Action'] == 'Dry-Run') {
                         sh "ansible-playbook --check -i /etc/ansible/hosts --private-key ${credentials('ansible')} ${params["Playbook Name"]}.yml"
                     } else if (params['Playbook Action'] == 'Playbook-deploy') {
-                        ansiblePlaybook become: true, credentialsId: 'ansible', disableHostKeyChecking: true, inventory: '/etc/ansible/hosts', playbook: 'nginx-deploy.yaml', vaultTmpPath: ''                    }
+                        ansiblePlaybook become: true, credentialsId: 'ansible', disableHostKeyChecking: true, inventory: '/etc/ansible/hosts', playbook: 'Nginx-Uninstallation.yml', vaultTmpPath: ''                   }
                 }
             }
         }
