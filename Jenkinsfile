@@ -14,7 +14,7 @@ pipeline {
         }
         stage('Git Pulling') {
             steps{
-                git branch: 'master', url: 'https://github.com/AmanPathak-DevOps/CICD-Ansible.git'
+                git branch: 'project', url: 'https://github.com/adahmo/Jenkins-CICD-Ansible.git'
             }
         }
         stage('Playbook Initializing') {
@@ -29,9 +29,9 @@ pipeline {
             steps {
                 script {
                     if (params['Playbook Action'] == 'Dry-Run') {
-                        sh "ansible-playbook --check -i /etc/ansible/hosts --private-key ${credentials('ansible-connect')} ${params["Playbook Name"]}.yml"
+                        sh "ansible-playbook --check -i /etc/ansible/hosts --private-key ${credentials('ansible')} ${params["Playbook Name"]}.yml"
                     } else if (params['Playbook Action'] == 'Playbook-deploy') {
-                        ansiblePlaybook credentialsId: 'ansible-connect', disableHostKeyChecking: true, inventory: '/etc/ansible/hosts', playbook: "${params['Playbook Name']}.yml"
+                        ansiblePlaybook become: true, credentialsId: 'ansible', disableHostKeyChecking: true, inventory: '/etc/ansible/hosts', playbook: '${params['Playbook Name']}.yml,' vaultTmpPath: "
                     }
                 }
             }
